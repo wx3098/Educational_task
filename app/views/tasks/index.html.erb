@@ -1,0 +1,22 @@
+<h1>ブログ一覧</h1>
+
+<p><%= notice %></p>
+
+<table>
+  <tr>
+    <th>タイトル</th>
+    <th>内容</th>
+  </tr>
+
+<% @tasks.each do |task| %>
+  <tr>
+    <td><%= task.name %></td>
+    <td><%= task.detail %></td>
+    <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
+    <td><%= link_to "編集する", edit_task_path(task.id) %></td>
+    <td><%= link_to "削除する", task_path(task.id), method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to '新しくブログを投稿する', new_task_path %>
