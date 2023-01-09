@@ -14,7 +14,8 @@ class TasksController < ApplicationController
         render :new
       else
       if @task.save
-        redirect_to tasks_path, notice: "作成しました"
+        redirect_to tasks_path
+        flash[:notice] = "作成しました"
       else
         render :new
       end
@@ -32,7 +33,8 @@ end
     def update
       @task = Task.find(params[:id])
       if @task.update(task_params)
-        redirect_to tasks_path, notice: "編集しました"
+        redirect_to tasks_path
+        flash[:notice] =  "編集しました"
       else
         render :edit
       end
@@ -40,7 +42,8 @@ end
 
     def destroy
       @task.destroy
-      redirect_to tasks_path, notice: "削除しました"
+      redirect_to tasks_path
+      flash[:notice] = "削除しました"
     end
 
     def confirm
