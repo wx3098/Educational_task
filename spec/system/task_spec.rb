@@ -17,7 +17,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         task = FactoryBot.create(:task, name: '箕輪')
         visit tasks_path
         expect(page).to have_content '箕輪'  
-      end
+       end
     end
   end
   describe '詳細表示機能' do
