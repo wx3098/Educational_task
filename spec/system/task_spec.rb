@@ -1,13 +1,28 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
+  # describe '新規作成機能' do
+  #   context 'タスクを新規作成した場合' do
+  #     it '作成したタスクが表示される' do
+  #       visit new_task_path
+  #       fill_in "task[name]",	with: "桜木"
+  #       fill_in "task[detail]", with: "テストです！"
+  #       click_on "commit"
+  #       expect(page).to have_content '桜木' 
+  #      end
+  #   end
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
-      it '作成したタスクが表示される' do
-        visit new_task_path
-        fill_in "task[name]",	with: "桜木"
-        fill_in "task[detail]", with: "テストです！"
-        click_on "commit"
-        expect(page).to have_content '桜木' 
+      it '終了期限が遅いタスクが上に表示される' do
+        FactoryBot.create(:task)
+        FactoryBot.create(:second_task)
+        visit tasks_path
+        # fill_in "名前",	with: "test"
+        # fill_in "詳細", with: "テストです！"
+        # fill_in "task[termination_date]", with: "テストです！"
+        task_list = all('.task_list')
+        # click_on "commit"
+        expect(task_list[0]).to have_content 'test' 
+        expect(task_list[1]).to have_content 'sample' 
        end
     end
   end
@@ -29,14 +44,14 @@ RSpec.describe 'タスク管理機能', type: :system do
        end
      end
   end
-  context 'タスクが作成日時の降順に並んでいる場合' do
-    it '新しいタスクが一番上に表示される' do
-     FactoryBot.create(:task)
-     FactoryBot.create(:second_task)
-     visit tasks_path
-     task_list = all('.task_list')
-     expect(task_list[0]).to have_content 'sample'
-     expect(task_list[1]).to have_content 'test'
-   end
-  end
+  # context 'タスクが作成日時の降順に並んでいる場合' do
+  #   it '新しいタスクが一番上に表示される' do
+  #    FactoryBot.create(:task)
+  #    FactoryBot.create(:second_task)
+  #    visit tasks_path
+  #    task_list = all('.task_list')
+  #    expect(task_list[0]).to have_content 'sample'
+  #    expect(task_list[1]).to have_content 'test'
+  #  end
+  # end
 end

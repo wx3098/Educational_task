@@ -19,6 +19,14 @@
     <%= form.label "詳細" %>
     <%= form.text_area :detail %>
   </div>
+  <div class="task_detail">
+    <%= form.label "日付" %>
+    <%= form.date_field :termination_date %>
+  </div>
+  <div>
+    <%= form.label "status" %>
+    <%= form.select :status, Task.statuses.keys.to_a, {} %>
+  </div>
   <%= form.submit %>
 <% end %>
 

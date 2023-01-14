@@ -1,4 +1,4 @@
-<h1>ブログ一覧</h1>
+<h1>タスク一覧</h1>
 
 <p><%= notice %></p>
 
@@ -6,15 +6,29 @@
   <tr>
     <th>タイトル</th>
     <th>内容</th>
+    <th>日付</th>
+    <th>ステータス</th>
   </tr>
+<%= form_with(url:tasks_path, local: true, scope: :task, method: :get) do |f| %>
+   <div class="title_name">
+    <%= f.label "名前" %>
+    <%= f.text_field :name %>
+    <%= f.select :status, [["未着手", 1],["着手中", 2],["完了", 3]] %>
+  </div><br>
+
+  <%= f.submit "検索" %>
+<% end %>
 
 <% @tasks.each do |task| %>
   <tr class = task_list>
     <td><%= task.name %></td>
     <td><%= task.detail %></td>
+    <td><%= task.termination_date %></td>
+    <td><%= task.status %></td>
     <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
     <td><%= link_to "編集する", edit_task_path(task.id) %></td>
     <td><%= link_to "削除する", task_path(task.id), method: :delete %></td>
+    <td><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></td>
   </tr>
 <% end %>
 </table>
