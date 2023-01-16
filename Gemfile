@@ -38,6 +38,7 @@ group :development, :test do
   gem 'net-smtp'
   gem 'net-imap'
   gem 'net-pop'
+  gem 'kaminari'
 end
 
 group :development do
