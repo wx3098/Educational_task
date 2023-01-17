@@ -5,29 +5,35 @@ class TasksController < ApplicationController
     end
 
   def index
+    @tasks = Task.all.page(params[:page]).per(10)
+
     if params[:sort_expired]
-          @tasks = Task.all.order(created_at: "DESC")
-            @tasks = Task.all.order(termination_date: "DESC")
-          else
-            @tasks = Task.all
-          end
-        end
+      @tasks = Task.all.order(termination_date: "DESC")
+    elsif params[:sort_status]
+      @tasks = @tasks.order(status: :asc)
+    else
+      @tasks = Task.all.order(created_at: "DESC")
+     end
+     if params[:search]
+      @tasks = @tasks.search_and(params[:search][:name], params[:search][:status]).name_search(params[:search][:name]).status_search(params[:search][:status])
+    end
+   end
     
-      if params[:task].present? 
-        if params[:task][:name].present? && params[:task][:status].present?
-        @tasks = Task.where(params:[:name][:status]).name_search(params[:name]).status_search(params[:status])
+      # if params[:task].present? 
+      #   if params[:task][:name].present? && params[:task][:status].present?
+      #   @tasks = Task.where(params:[:name][:status]).name_search(params[:name]).status_search(params[:status])
        
-        elsif params[:task][:name].present?
-          @tasks = Task.name_search(params[:task][:name])
-        elsif params[:task][:status].present?
+      #   elsif params[:task][:name].present?
+      #     @tasks = Task.name_search(params[:task][:name])
+      #   elsif params[:task][:status].present?
 
-          @tasks = Task.status_search(params[:task][:status])
-          end
-      end
+      #     @tasks = Task.status_search(params[:task][:status])
+      #     end
+      # end
 
     
 
-    def create
+  def create
       @task = Task.new(task_params)
       if params[:back]
         render :new
@@ -39,44 +45,44 @@ class TasksController < ApplicationController
         render :new
       end
     end
+  end 
+    
+  def show
+    Task.find(params[:id]) 
+   end
+
+  def edit
+    @task = Task.find(params[:id])
+  end
+
+  def update
+    @task = Task.find(params[:id])
+    if @task.update(task_params)
+      redirect_to tasks_path
+      flash[:notice] =  "編集しました"
+  else
+        render :edit
+  end
 end
 
-    def show
-      Task.find(params[:id]) 
-    end
+  def destroy
+    @task.destroy
+    redirect_to tasks_path
+    flash[:notice] = "削除しました"
+  end
 
-    def edit
-      @task = Task.find(params[:id])
-    end
+  def confirm
+    @task = Task.new(task_params)
+    render :new if @task.invalid?
+  end
 
-    def update
-      @task = Task.find(params[:id])
-      if @task.update(task_params)
-        redirect_to tasks_path
-        flash[:notice] =  "編集しました"
-      else
-        render :edit
-      end
-    end
+  private
 
-    def destroy
-      @task.destroy
-      redirect_to tasks_path
-      flash[:notice] = "削除しました"
-    end
+  def task_params
+      params.require(:task).permit(:name, :detail, :termination_date, :status)
+  end
 
-    def confirm
-      @task = Task.new(task_params)
-      render :new if @task.invalid?
-    end
-
-    private
-
-    def task_params
-        params.require(:task).permit(:name, :detail, :termination_date, :status)
-    end
-
-    def set_task
-      @task = Task.find(params[:id])
-    end
+  def set_task
+    @task = Task.find(params[:id])
+  end
 end
