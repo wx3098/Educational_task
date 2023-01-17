@@ -6,7 +6,7 @@ class TasksController < ApplicationController
 
   def index
 
-    @tasks = Task.all.page(params[:page]).per(10)
+   
     if params[:sort_expired].present?
       @tasks = Task.all.order(termination_date: "DESC").page(params[:page]).per(10)
       # elsif params[:sort_status]
@@ -18,8 +18,8 @@ class TasksController < ApplicationController
 
     if params[:sort_priority].present?
       @tasks = Task.all.order(priority: "ASC").page(params[:page]).per(10)
-    else
-      @tasks = Task.all.order(created_at: "DESC").page(params[:page]).per(10)
+    # else
+    #   @tasks = Task.all.order(created_at: "DESC").page(params[:page]).per(10)
     end
 
     if params[:task].present?
@@ -30,7 +30,7 @@ class TasksController < ApplicationController
       elsif params[:task][:status].present?
         @tasks = @tasks.status_search(params[:task][:status]).page(params[:page]).per(10)
       else
-        @tasks = @tasks
+        @tasks =  Task.all.page(params[:page]).per(10)
       end
     end
   end
