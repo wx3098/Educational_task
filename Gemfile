@@ -39,6 +39,7 @@ group :development, :test do
   gem 'net-imap'
   gem 'net-pop'
   gem 'kaminari'
+  gem 'bootstrap', '~> 4.3.1'
 end
 
 group :development do

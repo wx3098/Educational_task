@@ -1,43 +1,45 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [ :show, :edit, :update, :destroy]
-    def new
-      @task = Task.new
-    end
+  def new
+    @task = Task.new
+  end
 
   def index
+
     @tasks = Task.all.page(params[:page]).per(10)
-
-    if params[:sort_expired]
-      @tasks = Task.all.order(termination_date: "DESC")
-    elsif params[:sort_status]
-      @tasks = @tasks.order(status: :asc)
+    if params[:sort_expired].present?
+      @tasks = Task.all.order(termination_date: "DESC").page(params[:page]).per(10)
+      # elsif params[:sort_status]
+      #   @tasks = @tasks.order(status: :asc)
     else
-      @tasks = Task.all.order(created_at: "DESC")
-     end
-     if params[:search]
-      @tasks = @tasks.search_and(params[:search][:name], params[:search][:status]).name_search(params[:search][:name]).status_search(params[:search][:status])
+      @tasks = Task.all.order(created_at: "DESC").page(params[:page]).per(10)
     end
-   end
-    
-      # if params[:task].present? 
-      #   if params[:task][:name].present? && params[:task][:status].present?
-      #   @tasks = Task.where(params:[:name][:status]).name_search(params[:name]).status_search(params[:status])
-       
-      #   elsif params[:task][:name].present?
-      #     @tasks = Task.name_search(params[:task][:name])
-      #   elsif params[:task][:status].present?
 
-      #     @tasks = Task.status_search(params[:task][:status])
-      #     end
-      # end
 
-    
+    if params[:sort_priority].present?
+      @tasks = Task.all.order(priority: "ASC").page(params[:page]).per(10)
+    else
+      @tasks = Task.all.order(created_at: "DESC").page(params[:page]).per(10)
+    end
 
-  def create
-      @task = Task.new(task_params)
-      if params[:back]
-        render :new
+    if params[:task].present?
+      if params[:task][:name].present? && params[:task][:status].present?
+        @tasks = @tasks.name_search(params[:task][:name]).status_search(params[:task][:status]).page(params[:page]).per(10)
+      elsif params[:task][:name].present?
+        @tasks = @tasks.name_search(params[:task][:name]).page(params[:page]).per(10)
+      elsif params[:task][:status].present?
+        @tasks = @tasks.status_search(params[:task][:status]).page(params[:page]).per(10)
       else
+        @tasks = @tasks
+      end
+    end
+  end
+
+def create
+    @task = Task.new(task_params)
+    if params[:back]
+      render :new
+    else
       if @task.save
         redirect_to tasks_path
         flash[:notice] = "作成しました"
@@ -49,7 +51,7 @@ class TasksController < ApplicationController
     
   def show
     Task.find(params[:id]) 
-   end
+  end
 
   def edit
     @task = Task.find(params[:id])
@@ -60,10 +62,10 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to tasks_path
       flash[:notice] =  "編集しました"
-  else
-        render :edit
+    else
+      render :edit
+    end
   end
-end
 
   def destroy
     @task.destroy
@@ -79,10 +81,11 @@ end
   private
 
   def task_params
-      params.require(:task).permit(:name, :detail, :termination_date, :status)
+    params.require(:task).permit(:name, :detail, :termination_date, :status, :priority)
   end
 
   def set_task
     @task = Task.find(params[:id])
   end
 end
+

@@ -8,21 +8,22 @@ RSpec.describe 'タスク管理機能', type: :system do
   #       fill_in "task[detail]", with: "テストです！"
   #       click_on "commit"
   #       expect(page).to have_content '桜木' 
-  #      end
   #   end
+  # end
   describe '新規作成機能' do
+        before do
+        FactoryBot.create(:task, name: '菅良', termination_date: "2022-11-18")
+        FactoryBot.create(:second_task, name: '向井', termination_date: "2022-11-17")
+        FactoryBot.create(:three_task, name: '尾形', termination_date: "2022-11-16")
+        end
     context 'タスクを新規作成した場合' do
-      it '終了期限が遅いタスクが上に表示される' do
-        FactoryBot.create(:task)
-        FactoryBot.create(:second_task)
+      it '終了期限が近いタスクが上に表示される' do
         visit tasks_path
-        # fill_in "名前",	with: "test"
-        # fill_in "詳細", with: "テストです！"
-        # fill_in "task[termination_date]", with: "テストです！"
+        click_on '検索'
         task_list = all('.task_list')
-        # click_on "commit"
-        expect(task_list[0]).to have_content 'test' 
-        expect(task_list[1]).to have_content 'sample' 
+        expect(task_list[0]).to have_content '尾形' 
+        expect(task_list[1]).to have_content '向井' 
+        expect(task_list[2]).to have_content '菅良' 
        end
     end
   end
@@ -54,4 +55,43 @@ RSpec.describe 'タスク管理機能', type: :system do
   #    expect(task_list[1]).to have_content 'test'
   #  end
   # end
+end
+describe 'タスク管理機能', type: :system do
+  describe '検索機能' do
+    before do
+      # 必要に応じて、テストデータの内容を変更して構わない
+      FactoryBot.create(:task, name: "task", status: '未着手')
+      FactoryBot.create(:task, name: "sample", status: '完了')
+    end
+
+    context 'タイトルであいまい検索をした場合' do
+      it "検索キーワードを含むタスクで絞り込まれる" do
+        visit tasks_path
+        # タスクの検索欄に検索ワードを入力する (例: task)
+        fill_in 'task_name', with: 'task'
+        # 検索ボタンを押す
+        click_on '検索'
+        expect(page).to have_content 'task'
+      end
+    end
+    context 'ステータス検索をした場合' do
+      it "ステータスに完全一致するタスクが絞り込まれる" do
+        visit tasks_path
+        select '未着手', from: 'task_status' 
+        click_on '検索'
+        expect(page).to have_content '未着手'
+        # ここに実装する
+        # プルダウンを選択する「select」について調べてみること
+      end
+    end
+    context 'タイトルのあいまい検索とステータス検索をした場合' do
+      it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+       visit tasks_path
+       fill_in 'task[name]', with: 'task'
+       select '未着手', from: 'task_status'
+       click_on '検索'
+       expect(page).to have_content '未着手'
+      end
+    end
+  end
 end
