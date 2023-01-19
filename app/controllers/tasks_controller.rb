@@ -34,7 +34,6 @@ class TasksController < ApplicationController
       end
     end
   end
-
 def create
     @task = Task.new(task_params)
     if params[:back]
