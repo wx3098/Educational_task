@@ -40,6 +40,7 @@ group :development, :test do
   gem 'net-pop'
   gem 'kaminari'
   gem 'bootstrap', '~> 4.3.1'
+  gem 'bcrypt'
 end
 
 group :development do

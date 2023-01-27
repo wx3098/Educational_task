@@ -6,7 +6,6 @@ class TasksController < ApplicationController
 
   def index
 
-   
     if params[:sort_expired].present?
       @tasks = Task.all.order(termination_date: "DESC").page(params[:page]).per(10)
       # elsif params[:sort_status]
@@ -35,8 +34,8 @@ class TasksController < ApplicationController
     end
   end
 def create
-    @task = Task.new(task_params)
-    if params[:back]
+    @task = current_user.tasks.build(task_params)
+      if params[:back]
       render :new
     else
       if @task.save
@@ -74,6 +73,7 @@ def create
 
   def confirm
     @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     render :new if @task.invalid?
   end
 

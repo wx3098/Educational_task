@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  post '/admin/users/new', to: 'admin/users#create'
+  resources :sessions, only: [:new, :create, :destroy]
+  resources :users, only: [:new, :create, :show]
+  namespace :admin do
+    resources :users
+  end
   resources :tasks do
     collection do
       post :confirm
