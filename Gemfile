@@ -41,9 +41,6 @@ group :development, :test do
   gem 'kaminari'
   gem 'bootstrap', '~> 4.3.1'
   gem 'bcrypt'
-  gem 'net-smtp'
-  gem 'net-imap'
-  gem 'net-pop'
 end
 
 group :development do
