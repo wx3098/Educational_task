@@ -42,7 +42,7 @@ group :development, :test do
   gem 'net-imap'
   gem 'net-pop'
   gem 'kaminari'
-  # gem 'bcrypt'
+  gem 'bcrypt'
   gem 'faker'
 end
 
