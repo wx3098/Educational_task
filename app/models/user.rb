@@ -16,4 +16,5 @@ class User < ApplicationRecord
     def admin_jump
         throw(:abort) if self.admin == true && User.where(admin: true).count == 1
     end
+    
 end
