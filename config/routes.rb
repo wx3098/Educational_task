@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'users#new'
+  root 'tasks#index'
   post '/admin/users/new', to: 'admin/users#create'
   resources :sessions, only: [:new, :create, :destroy]
   resources :users, only: [:new, :create, :show]
