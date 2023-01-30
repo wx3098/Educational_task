@@ -17,8 +17,14 @@
 #              password_confirmation: "654321",
 #              admin: true)
 
-User.create!(name: "管理者3",
-             email: "test3@seed.com",
-             password: "654323",
-             password_confirmation: "654323",
+# User.create!(name: "管理者3",
+#              email: "test3@seed.com",
+#              password: "654323",
+#              password_confirmation: "654323",
+            #  admin: true)
+
+User.create!(name: "管理者4",
+             email: "test4@seed.com",
+             password: "654324",
+             password_confirmation: "654324",
              admin: true)

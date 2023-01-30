@@ -47,14 +47,13 @@ class Admin::UsersController < ApplicationController
 
 
   private
-
+  
+  def admin_user_current
+     redirect_to tasks_path, notice: '管理者以外はアクセスできません'  unless current_user.admin? 
+  end
+  
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
-  def admin_user_current
-   unless current_user.admin? 
-     redirect_to tasks_path, notice: '管理者以外はアクセスできません'
-   end
-  end
 end
