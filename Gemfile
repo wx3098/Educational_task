@@ -30,6 +30,8 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.3.1'
+gem 'bcrypt'
+gem 'faker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -42,8 +44,6 @@ group :development, :test do
   gem 'net-imap'
   gem 'net-pop'
   gem 'kaminari'
-  gem 'bcrypt'
-  gem 'faker'
 end
 
 group :development do
