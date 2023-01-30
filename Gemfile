@@ -35,6 +35,7 @@ gem 'faker'
 gem 'net-smtp'
 gem 'net-imap'
 gem 'net-pop'
+gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -43,7 +44,6 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rexml'
   gem 'pry-rails'
-  gem 'kaminari'
 end
 
 group :development do
