@@ -9,6 +9,7 @@
     <th>日付</th>
     <th>ステータス</th>
     <th>優先度</th>
+    <th>ユーザー名</th>
 
   </tr>
 <%= form_with(url:tasks_path, local: true,   scope: :task, method: :get) do |f| %>
@@ -27,6 +28,7 @@
     <td><%= task.termination_date %></td>
     <td><%= task.status %></td>
     <td><%= task.priority %></td>
+    <td><%= task.user.name %></td>
     <td><%= link_to '詳細を確認する', task_path(task.id), class:"btn btn-primary" %></td>
     <td><%= link_to "編集する", edit_task_path(task.id), class:"btn btn-success" %></td>
     <td><%= link_to "削除する", task_path(task.id), method: :delete, class: "btn btn-danger" %></td>
