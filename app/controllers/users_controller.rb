@@ -11,12 +11,16 @@ class UsersController < ApplicationController
           session[:user_id] = @user.id
           redirect_to user_path(@user.id) 
         else
-          render :new
+          render new_user_path
         end
     end
 
     def show
         @user = User.find(params[:id])
+        @tasks = current_user.tasks
+        unless @user == current_user
+            redirect_to tasks_path
+        end
     end
 
     private

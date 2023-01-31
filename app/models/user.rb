@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-    has_many :tasks
+    has_many :tasks, dependent: :destroy
     before_destroy:admin_jump
     before_update:admin_jump
     
@@ -16,4 +16,5 @@ class User < ApplicationRecord
     def admin_jump
         throw(:abort) if self.admin == true && User.where(admin: true).count == 1
     end
+
 end

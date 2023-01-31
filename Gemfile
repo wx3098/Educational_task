@@ -27,6 +27,15 @@ gem 'jbuilder', '~> 2.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'uglifier'
+gem 'jquery-rails'
+gem 'bootstrap', '~> 4.3.1'
+gem 'bcrypt'
+gem 'faker'
+gem 'net-smtp'
+gem 'net-imap'
+gem 'net-pop'
+gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -35,17 +44,10 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rexml'
   gem 'pry-rails'
-  gem 'net-smtp'
-  gem 'net-imap'
-  gem 'net-pop'
-  gem 'kaminari'
-  
-  gem 'bcrypt'
+
 end
 
 group :development do
-
-  
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.2'
