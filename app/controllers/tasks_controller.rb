@@ -5,18 +5,18 @@ class TasksController < ApplicationController
   end
 
   def index
-
+    @tasks = current_user.tasks
     if params[:sort_expired].present?
-      @tasks = Task.all.order(termination_date: "DESC").page(params[:page]).per(10)
+      @tasks = @tasks.order(termination_date: "DESC").page(params[:page]).per(10)
       # elsif params[:sort_status]
       #   @tasks = @tasks.order(status: :asc)
     else
-      @tasks = Task.all.order(created_at: "DESC").page(params[:page]).per(10)
+      @tasks = @tasks.order(created_at: "DESC").page(params[:page]).per(10)
     end
 
 
     if params[:sort_priority].present?
-      @tasks = Task.all.order(priority: "ASC").page(params[:page]).per(10)
+      @tasks = @tasks.order(priority: "ASC").page(params[:page]).per(10)
     # else
     #   @tasks = Task.all.order(created_at: "DESC").page(params[:page]).per(10)
     end
@@ -39,7 +39,7 @@ def create
       render :new
     else
       if @task.save
-        redirect_to tasks_path
+        redirect_to tasks_path(@task)
         flash[:notice] = "作成しました"
       else
         render :new
