@@ -5,18 +5,18 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-# Label.create([
-    # { name: 'ゴン'},
-    # { name: 'キルア'},
-    # { name: 'クラピカ'},
-    # { name: 'レオリオ'},
-#     { name: 'カイト'},
-#     { name: 'ヒソカ'},
-#     { name: 'クロロ'},
-#     { name: 'マチ'},
-#     { name: 'パクノダ'},
-#     { name: 'ノブナガ'},
-# ])
+Label.create([
+    { name: 'ゴン'},
+    { name: 'キルア'},
+    { name: 'クラピカ'},
+    { name: 'レオリオ'},
+    { name: 'カイト'},
+    { name: 'ヒソカ'},
+    { name: 'クロロ'},
+    { name: 'マチ'},
+    { name: 'パクノダ'},
+    { name: 'ノブナガ'},
+])
 
 
 
