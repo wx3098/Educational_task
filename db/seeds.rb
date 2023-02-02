@@ -87,57 +87,60 @@
     #     termination_date: "2023=0201",
     #     user_id: 2)
 
+  10.times do |i|
     Task.create!(
         name: "フリークス1",
         detail: "ネテロ会長1",
-        termination_date: "2023-0101",
-        user_id: 3)
+        termination_date: "2023-01-01",
+        user: User.order("RANDOM()").first
+    )
+    end
 
-    Task.create!(
-        name: "フリークス1",
-        detail: "ネテロ会長1",
-        termination_date: "2023-0221",
-        user_id: 4)
+    # Task.create!(
+    #     name: "フリークス1",
+    #     detail: "ネテロ会長1",
+    #     termination_date: "2023-02-21",
+    #     user_id: 4)
 
-    Task.create!(
-        name: "フリークス1",
-        detail: "ネテロ会長1",
-        termination_date: "2023-0101",
-        user_id: 5)
+    # Task.create!(
+    #     name: "フリークス1",
+    #     detail: "ネテロ会長1",
+    #     termination_date: "2023-01-01",
+    #     user_id: 5)
 
-    Task.create!(
-        name: "フリークス1",
-        detail: "ネテロ会長1",
-        termination_date: "2023-0221",
-        user_id: 6)
+    # Task.create!(
+    #     name: "フリークス1",
+    #     detail: "ネテロ会長1",
+    #     termination_date: "2023-02-21",
+    #     user_id: 6)
 
-    Task.create!(
-        name: "フリークス1",
-        detail: "ネテロ会長1",
-        termination_date: "2023-0211",
-        user_id: 7)
+    # Task.create!(
+    #     name: "フリークス1",
+    #     detail: "ネテロ会長1",
+    #     termination_date: "2023-02-11",
+    #     user_id: 7)
 
-    Task.create!(
-        name: "フリークス1",
-        detail: "ネテロ会長1",
-        termination_date: "2023-0204",
-        user_id: 8)
+    # Task.create!(
+    #     name: "フリークス1",
+    #     detail: "ネテロ会長1",
+    #     termination_date: "2023-02-04",
+    #     user_id: 8)
 
-    Task.create!(
-        name: "フリークス1",
-        detail: "ネテロ会長1",
-        termination_date: "2023-0205",
-        user_id: 9)
+    # Task.create!(
+    #     name: "フリークス1",
+    #     detail: "ネテロ会長1",
+    #     termination_date: "002023-0205",
+    #     user_id: 9)
 
-    Task.create!(
-        name: "フリークス1",
-        detail: "ネテロ会長1",
-        termination_date: "2023=0206",
-        user_id: 10)
+    # Task.create!(
+    #     name: "フリークス1",
+    #     detail: "ネテロ会長1",
+    #     termination_date: "2023=02=06",
+    #     user_id: 10)
 
-    Task.create!(
-        name: "フリークス1",
-        detail: "ネテロ会長1",
-        termination_date: "2023=0207",
-        user_id: 11)
+    # Task.create!(
+    #     name: "フリークス1",
+    #     detail: "ネテロ会長1",
+    #     termination_date: "2023=02-07",
+    #     user_id: 11)
     
