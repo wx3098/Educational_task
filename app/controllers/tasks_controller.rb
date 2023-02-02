@@ -5,34 +5,33 @@ class TasksController < ApplicationController
   end
 
   def index
-    @tasks = current_user.tasks
+    @tasks = current_user.tasks.order(created_at: "DESC").page(params[:page]).per(10)
     if params[:sort_expired].present?
-      @tasks = @tasks.order(termination_date: "DESC").page(params[:page]).per(10)
-      # elsif params[:sort_status]
-      #   @tasks = @tasks.order(status: :asc)
-    else
-      @tasks = @tasks.order(created_at: "DESC").page(params[:page]).per(10)
+      @tasks = @tasks.order(termination_date: "DESC")
     end
 
-
     if params[:sort_priority].present?
-      @tasks = @tasks.order(priority: "ASC").page(params[:page]).per(10)
+      @tasks = @tasks.order(priority: "ASC")
     # else
-    #   @tasks = Task.all.order(created_at: "DESC").page(params[:page]).per(10)
+    #   @tasks = Task.all.order(created_at: "DESC")
     end
 
     if params[:task].present?
       if params[:task][:name].present? && params[:task][:status].present?
-        @tasks = @tasks.name_search(params[:task][:name]).status_search(params[:task][:status]).page(params[:page]).per(10)
+        @tasks = @tasks.name_search(params[:task][:name]).status_search(params[:task][:status])
       elsif params[:task][:name].present?
-        @tasks = @tasks.name_search(params[:task][:name]).page(params[:page]).per(10)
+        @tasks = @tasks.name_search(params[:task][:name])
       elsif params[:task][:status].present?
-        @tasks = @tasks.status_search(params[:task][:status]).page(params[:page]).per(10)
+        @tasks = @tasks.status_search(params[:task][:status])
+      elsif params[:task][:label_id].present?
+        @tasks = @tasks.where(id: Labelling.where(label_id: params[:task][:label_id]).pluck(:task_id))
+
       else
-        @tasks =  Task.all.page(params[:page]).per(10)
+        @tasks
       end
     end
   end
+
 def create
     @task = current_user.tasks.build(task_params)
       if params[:back]
@@ -80,11 +79,10 @@ def create
   private
 
   def task_params
-    params.require(:task).permit(:name, :detail, :termination_date, :status, :priority)
+    params.require(:task).permit(:name, :detail, :termination_date, :status, :priority, { label_ids: [] })
   end
 
   def set_task
     @task = Task.find(params[:id])
   end
 end
-

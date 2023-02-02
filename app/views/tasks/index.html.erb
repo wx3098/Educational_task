@@ -10,9 +10,13 @@
     <th>ステータス</th>
     <th>優先度</th>
     <th>ユーザー名</th>
+    <th>ラベル</th>
 
   </tr>
 <%= form_with(url:tasks_path, local: true,   scope: :task, method: :get) do |f| %>
+<%= f.select("label_id", Label.all.pluck(:name, :id), { include_blank: true })%>
+<%= f.submit 'Search', name: nil %>
+
   <div class="title_name">
     <%= f.label "名前" %>
     <%= f.text_field :name, class:"rform-control" %>
@@ -29,12 +33,19 @@
     <td><%= task.status %></td>
     <td><%= task.priority %></td>
     <td><%= task.user.name %></td>
+    
+    <td><% task.labels.each do |label| %>  
+        <%= label.name %>
+        <% end %>
+    </td>
+
     <td><%= link_to '詳細を確認する', task_path(task.id), class:"btn btn-primary" %></td>
     <td><%= link_to "編集する", edit_task_path(task.id), class:"btn btn-success" %></td>
     <td><%= link_to "削除する", task_path(task.id), method: :delete, class: "btn btn-danger" %></td>
   </tr>
 <% end %>
 </table>
+
 
 <%= link_to '新しくタスクを投稿する', new_task_path %>
 <th><%= link_to "終了期限でソートする", tasks_path(sort_expired:"true") %></th>
